@@ -9,12 +9,18 @@ feature$V2 = as.character(feature$V2)
 keep_ind = grep(".*mean*|.*std.*",feature$V2)
 
 # Clean up the Naming A little bit 
-feature$V2[keep_ind] = gsub("-std$","StdDev",feature$V2[keep_ind])
-feature$V2[keep_ind] = gsub("-mean","Mean",feature$V2[keep_ind])
+replace_expr <- function(x,y,z) { gsub(x,y,z)}
+feature$V2[keep_ind] = sapply("-std",replace_expr,  y = "StdDev",z = feature$V2[keep_ind])
+feature$V2[keep_ind] = sapply("-mean",replace_expr,  y = "Mean",z = feature$V2[keep_ind])
+feature$V2[keep_ind] = sapply("^(t)",replace_expr,  y = "Time",z = feature$V2[keep_ind])
+feature$V2[keep_ind] = sapply("^(f)",replace_expr,  y = "Freq",z = feature$V2[keep_ind])
+feature$V2[keep_ind] = sapply("[-()]",replace_expr,  y = "",z = feature$V2[keep_ind])
+
+
 feature$V2[keep_ind] = gsub("^(t)","Time",feature$V2[keep_ind])
 feature$V2[keep_ind] = gsub("^(f)","Freq",feature$V2[keep_ind])
 feature$V2[keep_ind] = gsub("[-()]","",feature$V2[keep_ind])
-feature$V2[keep_ind] = gsub("^(Mag)","Magnitude",feature$V2[keep_ind])
+feature$V2[keep_ind] = gsub("[-Mag]","Magnitude",feature$V2[keep_ind])
 
 
 df_train <- read.table("../Downloads/Coursera/Data Science Specialization/GettingCleaningData/Project/UCI HAR Dataset/train/X_train.txt",stringsAsFactors = FALSE)[keep_ind]
