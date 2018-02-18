@@ -1,5 +1,9 @@
 # Code Book
 
+The first column, activity, tells the action the subject was performing when the measurements were recorded. 
+The second column, subject, provides the numerical ID for the subject from the test. 
+The following columns names the type of measurements recorded (such as the mean of the angle of the acceleration)
+Each value is the average of that type, by subject and activity from the raw data. Only measurements on the mean or standard deviation were included.
 
 1. Merges the training and the test sets to create one data set.
 Before this part we read in every 
